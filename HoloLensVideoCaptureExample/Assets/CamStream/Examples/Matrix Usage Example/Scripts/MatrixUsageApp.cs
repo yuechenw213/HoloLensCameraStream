@@ -20,7 +20,7 @@ public class MatrixUsageApp : MonoBehaviour
     void Start()
     {
         //Fetch a pointer to Unity's spatial coordinate system if you need pixel mapping
-        _spatialCoordinateSystemPtr = WorldManager.GetNativeISpatialCoordinateSystemPtr();
+        //_spatialCoordinateSystemPtr = WorldManager.GetNativeISpatialCoordinateSystemPtr();
 
         //Call this in Start() to ensure that the CameraStreamHelper is already "Awake".
         CameraStreamHelper.Instance.GetVideoCaptureAsync(OnVideoCaptureCreated);
@@ -55,7 +55,7 @@ public class MatrixUsageApp : MonoBehaviour
         this._videoCapture = videoCapture;
 
         //Request the spatial coordinate ptr if you want fetch the camera and set it if you need to 
-        CameraStreamHelper.Instance.SetNativeISpatialCoordinateSystemPtr(_spatialCoordinateSystemPtr);
+        //CameraStreamHelper.Instance.SetNativeISpatialCoordinateSystemPtr(_spatialCoordinateSystemPtr);
 
         _resolution = CameraStreamHelper.Instance.GetLowestResolution();
         float frameRate = CameraStreamHelper.Instance.GetHighestFrameRate(_resolution);

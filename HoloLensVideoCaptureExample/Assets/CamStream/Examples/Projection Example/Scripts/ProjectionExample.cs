@@ -24,7 +24,7 @@ public class ProjectionExample : MonoBehaviour {
     private IntPtr _spatialCoordinateSystemPtr;
     private byte[] _latestImageBytes;
     private bool stopVideo;
-    private GestureRecognizer _gestureRecognizer;
+    //private GestureRecognizer _gestureRecognizer;
 
     // Frame gameobject, renderer and texture
     private GameObject _picture;
@@ -43,16 +43,16 @@ public class ProjectionExample : MonoBehaviour {
     void Awake()
     {
         // Create and set the gesture recognizer
-        _gestureRecognizer = new GestureRecognizer();
-        _gestureRecognizer.Tapped += (args) => { Debug.Log("Tapped"); StartCoroutine(StopVideoMode()); };
-        _gestureRecognizer.SetRecognizableGestures(GestureSettings.Tap);
-        _gestureRecognizer.StartCapturingGestures();
+        //_gestureRecognizer = new GestureRecognizer();
+        //_gestureRecognizer.Tapped += (args) => { Debug.Log("Tapped"); StartCoroutine(StopVideoMode()); };
+        //_gestureRecognizer.SetRecognizableGestures(GestureSettings.Tap);
+        //_gestureRecognizer.StartCapturingGestures();
     }
 
 	void Start() 
     {
         //Fetch a pointer to Unity's spatial coordinate system if you need pixel mapping
-        _spatialCoordinateSystemPtr = WorldManager.GetNativeISpatialCoordinateSystemPtr();
+        //_spatialCoordinateSystemPtr = WorldManager.GetNativeISpatialCoordinateSystemPtr();
 	    CameraStreamHelper.Instance.GetVideoCaptureAsync(OnVideoCaptureCreated);
 
         // Create the frame container and apply HolographicImageBlend shader
@@ -94,7 +94,7 @@ public class ProjectionExample : MonoBehaviour {
         _videoCapture = v;
 
         //Request the spatial coordinate ptr if you want fetch the camera and set it if you need to 
-        CameraStreamHelper.Instance.SetNativeISpatialCoordinateSystemPtr(_spatialCoordinateSystemPtr);
+        //CameraStreamHelper.Instance.SetNativeISpatialCoordinateSystemPtr(_spatialCoordinateSystemPtr);
 
         _resolution = CameraStreamHelper.Instance.GetLowestResolution();
         float frameRate = CameraStreamHelper.Instance.GetHighestFrameRate(_resolution);

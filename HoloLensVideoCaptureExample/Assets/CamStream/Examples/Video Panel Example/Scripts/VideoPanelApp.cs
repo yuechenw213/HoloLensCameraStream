@@ -54,7 +54,7 @@ public class VideoPanelApp : MonoBehaviour
             Debug.LogError("Did not find a video capture object. You may not be using the HoloLens.");
             return;
         }
-        
+        Debug.Log("Capture object found.");
         this._videoCapture = videoCapture;
 
         //Request the spatial coordinate ptr if you want fetch the camera and set it if you need to 
@@ -93,6 +93,7 @@ public class VideoPanelApp : MonoBehaviour
 
     void OnFrameSampleAcquired(VideoCaptureSample sample)
     {
+        Debug.Log("acquired frame sample");
         //When copying the bytes out of the buffer, you must supply a byte[] that is appropriately sized.
         //You can reuse your byte[] unless you need to resize it for some reason.
         if (_latestImageBytes == null || _latestImageBytes.Length < sample.dataLength)
@@ -102,24 +103,27 @@ public class VideoPanelApp : MonoBehaviour
         sample.CopyRawImageDataIntoBuffer(_latestImageBytes);
         
         //If you need to get the cameraToWorld matrix for purposes of compositing you can do it like this
-        float[] cameraToWorldMatrix;
-        if (sample.TryGetCameraToWorldMatrix(out cameraToWorldMatrix) == false)
-        {
-            return;
-        }
+        //float[] cameraToWorldMatrix;
+        //if (sample.TryGetCameraToWorldMatrix(out cameraToWorldMatrix) == false)
+        //{
+        //    Debug.Log("failed to get camera to world matrix");
+        //    return;
+        //}
 
         //If you need to get the projection matrix for purposes of compositing you can do it like this
-        float[] projectionMatrix;
-        if (sample.TryGetProjectionMatrix(out projectionMatrix) == false)
-        {
-            return;
-        }
+        //float[] projectionMatrix;
+        //if (sample.TryGetProjectionMatrix(out projectionMatrix) == false)
+        //{
+        //    Debug.Log("failed to get projection matrix");
+        //    return;
+        //}
 
         sample.Dispose();
 
         //This is where we actually use the image data
         ThreadUtils.Instance.InvokeOnMainThread(() =>
         {
+            Debug.Log("setting video panel");
             _videoPanelUI.SetBytes(_latestImageBytes);
         });
     }

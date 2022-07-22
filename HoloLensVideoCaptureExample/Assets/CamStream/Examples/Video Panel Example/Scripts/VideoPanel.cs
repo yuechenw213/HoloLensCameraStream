@@ -19,7 +19,8 @@ public class VideoPanel : MonoBehaviour
     public void SetBytes(byte[] image)
     {
         var texture = rawImage.texture as Texture2D;
-        texture.LoadRawTextureData(image); //TODO: Should be able to do this: texture.LoadRawTextureData(pointerToImage, 1280 * 720 * 4);
+        texture.LoadRawTextureData(image); //TODO: Should be able to do this:
+        //texture.LoadRawTextureData(pointerToImage, 1280 * 720 * 4);
         texture.Apply();
     }
 }

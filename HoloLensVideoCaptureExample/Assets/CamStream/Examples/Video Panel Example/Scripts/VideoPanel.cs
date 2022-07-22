@@ -9,6 +9,7 @@ using UnityEngine.UI;
 public class VideoPanel : MonoBehaviour
 {
     public RawImage rawImage;
+    public MyTcpClient tcpClient;
 
     public void SetResolution(int width, int height)
     {
@@ -16,11 +17,20 @@ public class VideoPanel : MonoBehaviour
         rawImage.texture = texture;
     }
 
+    private bool usingTexture = false;
     public void SetBytes(byte[] image)
     {
+        if(usingTexture)
+        {
+            return;
+        }
+        usingTexture = true;
         var texture = rawImage.texture as Texture2D;
         texture.LoadRawTextureData(image); //TODO: Should be able to do this:
         //texture.LoadRawTextureData(pointerToImage, 1280 * 720 * 4);
         texture.Apply();
+
+        tcpClient.SendTexture(texture);
+        usingTexture = false;
     }
 }

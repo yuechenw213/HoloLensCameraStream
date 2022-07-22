@@ -23,7 +23,9 @@ public class VideoPanelApp : MonoBehaviour
     VideoPanel _videoPanelUI;
     VideoCapture _videoCapture;
 
-    IntPtr _spatialCoordinateSystemPtr; 
+    IntPtr _spatialCoordinateSystemPtr;
+
+    
 
     void Start()
     {
@@ -125,6 +127,7 @@ public class VideoPanelApp : MonoBehaviour
         {
             Debug.Log("setting video panel");
             _videoPanelUI.SetBytes(_latestImageBytes);
+
         });
     }
 }

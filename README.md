@@ -3,6 +3,26 @@ This Unity plugin makes the HoloLens video camera frames available to a Unity ap
 
 Use this if you need access to the HoloLens camera's frame buffer in Unity, including the [locatable camera attributes](https://developer.microsoft.com/en-us/windows/mixed-reality/locatable_camera).
 
+---
+
+Yuechen edited:
+
+The origin project is created in 2018, in order to wor with this plugin in Unity 2020.3.36, I commented out some old functions, mainly the `WorldManager` and `GestureRecognizer` related function.
+If needed in the future, we can use MRTK functions instead.
+
+Using the plugin in 2022:
+
+Do not build the plugin in visual studio to get DLL files, Unity will complain with them. There exists DLL files in [Example Asset](./HoloLensVideoCaptureExample/Assets/CamStream/Plugins/HoloLensCameraStream.dll) and [WSA folder](./HoloLensVideoCaptureExample/Assets/CamStream/Plugins/WSA), just copy them to the place indicated in [Integrating the plugin into a Unity project](#integrating-the-plugin-into-a-unity-project) section.
+
+Using sample project:
+
+I modified the [Video Panel Example](./HoloLensVideoCaptureExample/Assets/CamStream/Examples/Video%20Panel%20Example) for streaming video to server. The origin Unity project get video from Hololens PV camera, and display in a UI panel in Unity scene. 
+For video streaming using Unity 2020, the [`VideoPanel.cs`](./HoloLensVideoCaptureExample/Assets/CamStream/Examples/Video%20Panel%20Example/Scripts/VideoPanel.cs) and [`VideoPanelApp.cs`](./HoloLensVideoCaptureExample/Assets/CamStream/Examples/Video%20Panel%20Example/Scripts/VideoPanelApp.cs) is modified to get rid of the old XR functions, and connect to the newly added [`MyTcpClient.cs`](./HoloLensVideoCaptureExample/Assets/CamStream/Examples/Video%20Panel%20Example/Scripts/MyTcpClient.cs).
+
+For further information, see in-line comments.
+
+---
+
 ## With this plugin, you can
 * Do computer vision and machine learning on the frames in real time. (algorithms not included)
 * Show a preview of what the HoloLens camera sees.

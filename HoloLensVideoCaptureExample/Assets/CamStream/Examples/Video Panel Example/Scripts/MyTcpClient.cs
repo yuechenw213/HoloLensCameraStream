@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 
 #if !UNITY_EDITOR
@@ -192,6 +193,23 @@ public class MyTcpClient : MonoBehaviour
         writer.BaseStream.Write(bytes, 0, bytes.Length);
         Debug.Log("sent a texture");
         queueempty = true;
+    }
+
+    public async Task SendEncodedImg(byte[] encodedImg)
+    {
+        if (!queueempty)
+        {
+            return;
+        }
+
+        queueempty = false;
+        writer.Write("d");
+        writer.BaseStream.Write(BitConverter.GetBytes(encodedImg.Length), 0, 4);
+        Debug.Log(encodedImg.Length);
+        writer.BaseStream.Write(encodedImg, 0, encodedImg.Length);
+        Debug.Log("sent encoded image");
+        queueempty = true;
+
     }
 
     public void ExchangePackets()

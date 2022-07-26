@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.XR.WSA;
 
 using System;
-
+using System.Threading;
 using HoloLensCameraStream;
 
 /// <summary>
@@ -17,6 +17,7 @@ using HoloLensCameraStream;
 public class VideoPanelApp : MonoBehaviour
 {
     byte[] _latestImageBytes;
+    int width, height;
     HoloLensCameraStream.Resolution _resolution;
 
     //"Injected" objects.
@@ -70,7 +71,9 @@ public class VideoPanelApp : MonoBehaviour
         //I'm just adding them to show you that they exist.
         CameraParameters cameraParams = new CameraParameters();
         cameraParams.cameraResolutionHeight = _resolution.height;
+        height = _resolution.height;
         cameraParams.cameraResolutionWidth = _resolution.width;
+        width = _resolution.width;
         cameraParams.frameRate = Mathf.RoundToInt(frameRate);
         cameraParams.pixelFormat = CapturePixelFormat.BGRA32;
         cameraParams.rotateImage180Degrees = true; //If your image is upside down, remove this line.
@@ -123,11 +126,15 @@ public class VideoPanelApp : MonoBehaviour
         sample.Dispose();
 
         //This is where we actually use the image data
+
+
+
         ThreadUtils.Instance.InvokeOnMainThread(() =>
         {
             Debug.Log("setting video panel");
-            _videoPanelUI.SetBytes(_latestImageBytes);
-
+            //_videoPanelUI.SetBytes(_latestImageBytes);
+            //TODO: encode bytes to img
+            _videoPanelUI.encodeImg(_latestImageBytes, width, height);
         });
     }
 }
